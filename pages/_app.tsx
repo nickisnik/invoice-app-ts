@@ -4,10 +4,10 @@ import Navbar from '../components/Navbar'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <div className='app'>
       <Navbar />
       <Component {...pageProps} />
-    </>
+    </div>
   )
 }
 

@@ -1,0 +1,61 @@
+.container {
+    padding: 2rem 1rem;
+    background-color: rgb(232, 232, 232);
+    margin: 0;
+    width: 90%;
+    display: flex;
+}
+.table_wrapper {
+    position: relative;
+    overflow-x: scroll;
+    filter: drop-shadow(0px 0px 1px black);
+    border-radius: 5px;
+}
+.table {
+    /* border-collapse: collapse; */
+    background-color: white;
+    position: relative;
+    border-collapse: separate; 
+    border-spacing: 0px 5em;
+}
+.headrow {
+    /* display: flex; */
+}
+.headDay_wrapper {
+    font-size: 1rem;
+    background-color: white;
+}
+.headDay {
+    display: flex;
+    width: 10vw;
+    flex-direction: column;
+}
+.users_header, .user_details {
+    position: sticky;
+    left: 0;
+    padding: 0 2rem;
+    background-color: white;
+}
+.user_details {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.header_monthDate {
+    font-weight: 600;
+    line-height: 1.2rem;
+}
+.header_dayOfWeek {
+    font-weight: 300;
+    line-height: 1.2rem;
+}
+
+.task_wrapper {
+    text-align: center;
+    background-color: rgb(0, 183, 255);
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    
+}
