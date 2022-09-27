@@ -1,0 +1,159 @@
+.container {
+    background-color: var(--grey-blue);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+    color: aliceblue;
+    font-family: 'Mukta';
+    position: relative;
+}
+
+.header {
+    background-color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: var(--shadow);
+    color: var(--grey);
+}
+.id {
+    margin: 0;
+}
+.id span {
+    color: grey;
+    font-size: 0.8em;
+}
+.edit, .delete, .mark {
+    color: white;
+    padding: 0.8em 2em;
+    margin-left: 0.5em;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.edit {
+    background-color: #487ce5;
+    margin-left: auto;
+}
+.delete {
+    background-color: rgb(236, 70, 70);
+}
+.mark {
+    background-color: #7D5DF9;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    background-color: white;
+    border-radius: 5px;
+}
+
+.personal_details {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--grey);
+}
+.name_section {
+    display: flex;
+    flex-direction: column;
+}
+.name {
+    margin: 0;
+    font-size: 1.5em;
+}
+.email {
+    margin: auto 0 0 0;
+    font-weight: 400;
+}
+.address p {
+    margin: 0;
+    line-height: 1.3em;
+    text-align: end;
+    font-weight: 400;
+    color: grey;
+}
+
+.list {
+    background-color: var(--grey-blue);
+    width: 90%;
+    margin: 1rem auto;
+    border-radius: 5px;
+    border-spacing: 0;
+    color: black;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+.th {
+    padding: 1em 0;
+    color: var(--grey);
+    font-weight: 500;
+    text-align: end;
+}
+.th:nth-of-type(1) {
+    text-align: start;
+    padding-left: 5%;
+}
+.th:nth-last-child(1) {
+    padding-right: 5%;
+}
+
+.item td {
+    text-align: end;
+    padding: 0.25em 0;
+    border-bottom: 1px solid rgb(113, 113, 113);
+}
+.item td:nth-of-type(1) {
+    text-align: start;
+    padding-left: 5%;
+}
+.item td:nth-last-of-type(1) {
+    padding-right: 5%;
+}
+
+.total_row {
+    background-color: #487ce5;
+    color: white;
+}
+.total, .total_num {
+    padding: 1rem 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+.total {
+    text-align: start;
+    padding-left: 5%;
+}
+.total_num {
+    text-align: end;
+    padding-right: 5%;
+}
+
+.paid, .pending, .draft {
+    padding: 0.4rem 0;
+    min-width: 5rem;
+    width: 6rem;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 600;
+    margin: 0 auto 0 1rem;
+}
+.paid {
+    background-color: var(--paid);
+    color: white;
+}
+.pending {
+    background-color: var(--pending);
+    color: white;
+}
+.draft {
+    background-color: var(--draft);
+    color: white;
+}

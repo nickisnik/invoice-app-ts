@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
 html,
 body {
   padding: 0;
@@ -6,6 +8,15 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+:root {
+  --shadow: 0px 3px 3px 0px rgba(128, 128, 128, 0.149);
+  --grey: rgb(95,99,104);
+  --grey-blue: rgb(245, 248, 250);
+  --item-grey: #f1f1f1;
+  --paid: #00C874;
+  --draft: #d6d6d6;
+  --pending: #ffac38;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -23,4 +34,13 @@ a {
     color: white;
     background: black;
   }
+}
+#__next {
+  display: flex;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Mukta';
+}
+button {
+  border: none;
 }

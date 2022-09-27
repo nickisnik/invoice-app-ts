@@ -1,0 +1,49 @@
+.container {
+    color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.508);
+    width: 100%;
+    height: 100%;
+}
+
+.edit_wrapper {
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+    z-index: 100;
+    padding: 0 1.5rem;
+    width: 50%;
+}
+.header {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 0 1rem;
+}
+
+.edit_form {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    color: rgb(148, 161, 174);
+    font-weight: 600;
+}
+.input {
+    border: 2px solid rgb(148, 161, 174);
+    font-size: 1rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    border-radius: 5px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
