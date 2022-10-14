@@ -10,9 +10,9 @@ const InvoiceEditor = ({invoice, setInvoice, setEditMode}) => {
             <form className={styles.edit_form}>
                 <label className={styles.label} htmlFor="fromStreet">Street Address</label>
                 <input type="text" name='fromStreet' className={styles.input} />
-                <label className={styles.label} htmlFor="clientName">Client's Name</label>
+                <label className={styles.label} htmlFor="clientName">Client&apos;s Name</label>
                 <input type="text" name='clientName' className={styles.input} />
-                <label className={styles.label} htmlFor="clientEmail">Client's Email</label>
+                <label className={styles.label} htmlFor="clientEmail">Client&apos;s Email</label>
                 <input type="text" name='clientEmail' className={styles.input} />
                 <label className={styles.label} htmlFor="toStreet">Street Address (Receiver)</label>
                 <input type="text" name='toStreet' className={styles.input} />
