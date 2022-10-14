@@ -72,8 +72,8 @@ const Invoices = () => {
           <tbody>
             {data && data.map((item : any, index : number) => {
               return (
-                <Link href={`/invoices/${item.id}`}>
-                  <tr key={index} className={`${styles.invoice_item} ${statusColor(item.status)}`}>
+                <Link key={index} href={`/invoices/${item.id}`}>
+                  <tr className={`${styles.invoice_item} ${statusColor(item.status)}`}>
                     <td className={styles.item_id}><span>#</span>{item.id}</td>
                     <td className={styles.item_date}>Due {item.date}</td>
                     <td className={styles.item_name}>{item.name}</td>

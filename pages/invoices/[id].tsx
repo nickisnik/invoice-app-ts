@@ -30,7 +30,6 @@ const Invoice = () => {
     )
   return (
     <div className={styles.container}>
-        {/* <InvoiceEditor setEditMode={setEditMode} invoice={invoice} setInvoice={setInvoice} /> */}
         <header className={styles.header}>
             <h2 className={styles.id}>Invoice <span>#</span>{id}</h2>
             <div className={invoiceStatusClass}>{invoice.status}</div>

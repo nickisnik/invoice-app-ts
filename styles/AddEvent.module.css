@@ -1,0 +1,40 @@
+.overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 220;
+    display: flex;
+}
+
+.wrapper {
+    display: flex;
+    margin: auto;
+    background-color: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    flex-direction: column;
+    min-height: 450px;
+    min-width: 350px;
+    color: white;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.201);
+}
+.selector_wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    justify-content: space-around;
+}
+.selector_item {
+    font-size: 1.1em;
+    text-align: center;
+    padding: 0.2em 0;
+    border-bottom: 2px solid var(--border-grey);
+    color: grey;
+    cursor: pointer;
+}
+
+.active {
+    border-bottom: 2px solid rgb(0, 128, 255);
+    color: rgb(0, 128, 255);
+    font-weight: 500;
+}
