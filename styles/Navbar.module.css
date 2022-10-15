@@ -9,6 +9,7 @@
     flex-direction: column;
     z-index: 100;
     gap: 0.2rem;
+    font-size: 1rem;
     /* border-radius: 0px 15px 15px 0px; */
 }
 .logo {
@@ -85,8 +86,8 @@
 }
 
 .profile_wrapper {
-    height: 40px;
-    width: 40px;
+    height: 2em;
+    width: 2em;
     overflow: hidden;
     border-radius: 50%;
     border: 2px solid var(--active-white);
@@ -99,4 +100,11 @@
 .logout {
     margin: auto 0;
     text-decoration: underline;
+}
+
+
+@media only screen and (min-width: 2200px) {
+    .container {
+        font-size: max(32px, 1rem);
+    }
 }
