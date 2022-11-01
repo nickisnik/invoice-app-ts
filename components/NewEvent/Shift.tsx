@@ -24,7 +24,7 @@ const Shift = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSu
                     <DateTimePicker
                         className={styles.datePicker}
                         label="Start time"
-                        /* inputFormat="dd/MM/yyyy" */
+                        inputFormat="dd/MM/yyyy hh:mm a"
                         value={startDate}
                         onChange={(value) => handleDateChange(value, true)}
                         renderInput={(params) => <TextField {...params} />}
@@ -32,7 +32,7 @@ const Shift = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSu
                     <DateTimePicker
                         className={styles.datePicker}
                         label="End time"
-                        /* inputFormat="dd/MM/yyyy" */
+                        inputFormat="dd/MM/yyyy hh:mm a"
                         value={endDate}
                         onChange={(value) => handleDateChange(value, false)}
                         renderInput={(params) => <TextField {...params} />}

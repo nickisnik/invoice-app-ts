@@ -9,6 +9,7 @@ import {InputLabel, TextField, Select, MenuItem, NativeSelect} from '@mui/materi
 import type {User, Event} from '../schedule'
 import Shift from './Shift';
 import Note from './Note';
+import Off from './Off';
 const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} : any) => {
     const handleSubmit = (e : any) => {
         const title = selectedTitle.current.value
@@ -70,11 +71,13 @@ const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} 
             <div className={`${styles.selector_item} ${eventType==='Shift' && styles.active}`} onClick={() => setEventType('Shift')}>Shift</div>
             <div className={`${styles.selector_item} ${eventType==='Task' && styles.active}`} onClick={() => setEventType('Task')}>Task</div>
             <div className={`${styles.selector_item} ${eventType==='Note' && styles.active}`} onClick={() => setEventType('Note')}>Note</div>
+            <div className={`${styles.selector_item} ${eventType==='Off' && styles.active}`} onClick={() => setEventType('Off')}>Off</div>
         </section>
         {eventType === 'Shift' ?
         <Shift selected={selected} selectedTitle={selectedTitle} setShowEditor={setShowEditor} selectedUserId={selectedUserId} handleSubmit={handleSubmit} handleDateChange={handleDateChange} users={users} startDate={startDate} endDate={endDate} /> :
         eventType === 'Task' ? <></> :
         eventType === 'Note' ? <Note selected={selected} selectedTitle={selectedTitle} setShowEditor={setShowEditor} selectedUserId={selectedUserId} handleSubmit={handleSubmit} handleDateChange={handleDateChange} users={users} startDate={startDate} /> :
+        eventType === 'Off' ? <Off selected={selected} selectedTitle={selectedTitle} setShowEditor={setShowEditor} selectedUserId={selectedUserId} handleSubmit={handleSubmit} handleDateChange={handleDateChange} users={users} startDate={startDate} /> :
         <></>}
             
         </div>

@@ -55,3 +55,9 @@ button {
 .component_wrapper {
   width: 85vw;
 }
+
+@media only screen and (max-width: 900px) { 
+  .component_wrapper {
+    width: 92vw;
+  }
+}

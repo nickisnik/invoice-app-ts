@@ -24,9 +24,9 @@ const UserEvents = ({currentDay, currentDayIndex, user, toggleEditor} : any) => 
             .map((userEvent : Event, eventIndex : number) => (
                 <UserEvent key={eventIndex} user={user} eventsToday={eventsToday} userEvent={userEvent} eventIndex={eventIndex} />
             ))}
-            <div onClick={() => toggleEditor(user.userId, user.name, currentDay)} className={styles.empty_event}>
+            {eventsToday[0]?.type !== 'Off' && <div onClick={() => toggleEditor(user.userId, user.name, currentDay)} className={styles.empty_event}>
                 <span>+</span>
-            </div>
+            </div>}
         </div>
     )
 }
@@ -63,6 +63,14 @@ export const UserEvent = ({user, eventsToday, eventIndex, userEvent} : EventProp
         return (
             <div key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
                 <span className={`${styles.event_name} ${styles.note}`}>{userEvent.name}</span>
+            </div>
+        )
+    }
+    if(userEvent.type === 'Off') {
+        return (
+            <div key={eventIndex} style={{backgroundColor: user.color}} className={`${styles.task} ${styles.time_off}`}>
+                <span className={styles.off_title}>Time off</span>
+                <span className={styles.off_reason}>{userEvent.name}</span>
             </div>
         )
     }

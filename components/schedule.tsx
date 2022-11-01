@@ -42,7 +42,7 @@ const users = [
 
             }
         ]
-    },
+    }/* ,
     {   name : "Tim C.",
         userId: "83917",
         position: "Waiter",
@@ -72,32 +72,6 @@ const users = [
 
             }
         ]
-    }
+    } */
 ]
-  /*   {   "name" : "Jason",
-        "position": "Designer",
-        "events": {
-            "03/10/2022": ["Running", "Cooking"],
-            "05/10/2022" : ["Laundry"],
-            "27/10/2022" : ["Tennis game"]
-    }
-    },
-    {   "name" : "Madeleine",
-        "position": "Designer",
-        "events": {
-            "05/10/2022": ["Running", "Cooking"],
-            "09/10/2022" : ["Laundry"],
-            "27/10/2022" : ["Tennis game"]
-    }
-    },
-    {   "name" : "Tim",
-        "position": "Designer",
-        "events": {
-            "03/10/2022": ["Running", "Cooking"],
-            "05/10/2022" : ["Laundry"],
-            "27/10/2022" : ["Tennis game"]
-    }
-    }
-    
-] */
 export default users
