@@ -7,10 +7,14 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router'
+import { useStore } from '../utils/store';
+import NavUserProfile from './NavUserProfile';
 
 const Navbar = () => {
   const router = useRouter();
   const currentRoute = router.pathname;
+
+
   return (
     <nav className={styles.container}>
       <span className={styles.logo}>Shiftly</span>
@@ -25,10 +29,8 @@ const Navbar = () => {
           <a className={currentRoute === '/schedule' ? `${styles.active} ${styles.menu_item}` : styles.menu_item}><EventNoteIcon /> <span>Schedule</span></a>
         </Link>
       </div>
-      <div className={styles.account}>
-        <div className={styles.profile_wrapper}><img src="/profile.jpeg" alt="" /></div>
-        <span className={styles.logout}>Logout</span>
-      </div>
+
+      <NavUserProfile/>
     </nav>
   )
 }
