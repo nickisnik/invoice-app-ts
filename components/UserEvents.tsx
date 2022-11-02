@@ -6,7 +6,7 @@ const UserEvents = ({currentDay, currentDayIndex, user, toggleEditor} : any) => 
     useEffect(() => {
     }, [])
     const currentDate = format(currentDay, 'dd/MM/yyyy');
-    const eventsToday = user.events.filter((userEvent : Event) => (
+    const eventsToday = user.events?.filter((userEvent : Event) => (
         format(Date.parse(userEvent.timeStart), 'dd/MM/yyyy') === currentDate
         ))
     const shiftFirst = (a : Event, b : Event) => {
@@ -18,9 +18,10 @@ const UserEvents = ({currentDay, currentDayIndex, user, toggleEditor} : any) => 
         }
         return 0
     }
+    
     return (
         <div key={currentDayIndex} className={styles.task_wrapper}>
-            {eventsToday.sort((a:Event,b:Event) => shiftFirst(a,b))
+            {eventsToday?.sort((a:Event,b:Event) => shiftFirst(a,b))
             .map((userEvent : Event, eventIndex : number) => (
                 <UserEvent key={eventIndex} user={user} eventsToday={eventsToday} userEvent={userEvent} eventIndex={eventIndex} />
             ))}
