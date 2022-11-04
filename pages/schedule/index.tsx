@@ -8,7 +8,10 @@ import type {User, Event} from '../../components/schedule'
 import Head from 'next/head'
 import UserEvents from '../../components/UserEvents'
 import { db } from '../../utils/firebase-config'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection, onSnapshot, getDocs, where, query } from 'firebase/firestore'
+import Image from 'next/image'
+import { useStore } from '../../utils/store'
+import type { AuthDetails } from '../../utils/store'
 
 const Schedule = () => {
 	const [days, setDays] = useState<any>(() => {
@@ -21,7 +24,6 @@ const Schedule = () => {
 					})
 			)
 	})
-	const usersCollectionRef = collection(db, "users")
 	const changeDays = (offset : number) => {
 			const currentStartDate = days[0]
 			const today = addDays(currentStartDate, offset)
@@ -36,17 +38,30 @@ const Schedule = () => {
 			})
 
 	}
+	const [events, setEvents] = useState<Event[] | null>()
+	useEffect(() => {
+		if(!days) return
+		const eventsCollectionRef = collection(db, "businesses", "Nick's restaurant", "events")
+		const q = query(eventsCollectionRef, where('timeStart', '>', days[0]), where('timeStart', '<', days[6]))
+		const unsubscribe = onSnapshot(q, (data: any) => {
+			const event_data = data.docs.map((doc : any) => ({...doc.data(), id: doc.id}))
+			setEvents(event_data)
+			console.log(event_data)
+		})
+		return () => unsubscribe()
+	}, [days])
+
 	const [showEditor, setShowEditor] = useState(false)
 	const [users, setUsers] = useState<User[]>();
 	const selected = useRef<any>()
 	useEffect(() => {
+			// Next step is add possible filters for user queries
+			const usersCollectionRef = collection(db, "users")
 			const unsubscribe = onSnapshot(usersCollectionRef, (data : any) => {
 				const user_data = data.docs.map((doc : any) => ({...doc.data(), id: doc.id}))	
+				setUsers(user_data)
 				console.log(user_data)
-				//setUsers(user_data)
 			})
-			// Api call will be here
-			setUsers(usersData)
 			return () => unsubscribe()
 	}, [])
 	const toggleEditor = (userId : string, name: string, day : string) => {
@@ -58,18 +73,17 @@ const Schedule = () => {
 			setShowEditor((prev) => !prev)
 	} 
 	const addUser = () => {
-			const newUser = {
-					name: 'Brad',
-					color: 'rgb(00,22,55)',
-					userId: "92022",
-					position: 'Worker',
-					events: []
-			}
-			setUsers((old) => {
-					if(!old) return
-					return [...old, newUser]
-			})
+			// const newUser = {
+			// 		name: 'Brad',
+			// 		color: 'rgb(00,22,55)',
+			// 		position: 'Worker'
+			// }
+			// setUsers((old) => {
+			// 		if(!old) return
+			// 		return [...old, newUser]
+			// })
 	}
+	const authDetails : AuthDetails = useStore((state : any) => state.authDetails)
 return (
 	<div className={styles.page_container}>
 			<Head>
@@ -110,10 +124,14 @@ return (
 							</header>
 							<main className={styles.main}>
 											{users?.map((user : User, userIndex : number) => {
+												let user_events : Event[] | [] = [] ;
+												if(events) {
+													user_events = events.filter((event : Event) => event.user_id === user.id)
+												}
 													return (
 													<div className={styles.events_row} key={userIndex}>
 															<div style={{backgroundColor: user.color}} className={styles.username_box}>
-																	<div className={styles.avatar_wrapper}><img src="profile.jpeg" alt="Profile" /></div>
+																	<div className={styles.avatar_wrapper}><Image layout='fill' src={user.photoURL} alt="Profile" /></div>
 																	<div className={styles.name_wrapper}>
 																			<span className={styles.user_name}>{user.name}</span>
 																			<span className={styles.user_position}>20h, {user.position}</span>
@@ -122,7 +140,7 @@ return (
 																	<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="451.847px" height="451.847px" viewBox="0 0 451.847 451.847" fill="currentColor"> <g> <path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744 c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
 															</div>
 															{days?.map((currentDay : any, currentDayIndex : number) => (
-																	<UserEvents key={currentDayIndex} currentDay={currentDay} currentDayIndex={currentDayIndex} user={user} toggleEditor={toggleEditor} />
+																	<UserEvents user_events={user_events} key={currentDayIndex} currentDay={currentDay} currentDayIndex={currentDayIndex} user={user} toggleEditor={toggleEditor} />
 															))}
 													</div>)
 	})}

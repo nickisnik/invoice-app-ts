@@ -3,9 +3,10 @@ import {useEffect, useState} from 'react'
 import type { AppProps } from 'next/app'
 import Navbar from '../components/Navbar'
 import { useStore } from '../utils/store';
-import { auth } from '../utils/firebase-config';
+import { auth, db } from '../utils/firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
 import Loading from '../components/Loading';
+import { updateDoc, doc } from 'firebase/firestore'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [authState, setAuthState] = useStore(
@@ -24,6 +25,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 					id: user.uid,
 					loggedIn: true
 				})
+        const userDoc = doc(db, "users", user.uid)
+        // Update user name and photo from google
+        // in case they changed since last time
+        updateDoc(userDoc, {
+          name: user.displayName,
+          photoURL: user.photoURL
+        })
         // Loading screen
         setTimeout(() => {
           setAuthLoaded(true)
@@ -48,15 +56,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => unsubscribe()
 	}, [])
 
-  // function getValidatedUser() {
-  //   return new Promise((resolve, reject) => {
-  //     const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //           unsubscribe();
-  //           resolve(user);
-  //         },
-  //         reject // pass up any errors attaching the listener
-  //       );
-  //   });
   if(!authLoaded) {
     return (
       <div className='app'>

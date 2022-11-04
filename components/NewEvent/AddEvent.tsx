@@ -1,35 +1,27 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {format, parse, compareAsc} from 'date-fns' 
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import styles from '../../styles/AddEvent.module.css'
 import {InputLabel, TextField, Select, MenuItem, NativeSelect} from '@mui/material'
 import type {User, Event} from '../schedule'
 import Shift from './Shift';
 import Note from './Note';
 import Off from './Off';
+import { db } from '../../utils/firebase-config';
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
 const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} : any) => {
     const handleSubmit = (e : any) => {
-        const title = selectedTitle.current.value
-        const newData = users.map((user : User) => {
-            if(user.userId === selectedUserId.current.value) {
-                return {...user, events:[
-                    ...user.events,
-                    {
-                        eventId: Math.floor(Math.random()*10000).toString(),
-                        name: title,
-                        type: eventType,
-                        timeStart: startDate.toString(),
-                        timeEnd: endDate.toString() // will need to change!
-                    }
-                ]}
-            }
-            return user
-        })
-        setUsers(newData)
         e.preventDefault()
+        const eventsCollectionRef = collection(db, "businesses", "Nick's restaurant", "events")
+        const title = selectedTitle.current.value
+        const newEvent =  {   
+            user_id: selected.id,
+            name: title,
+            type: eventType,
+            timeStart: Timestamp.fromDate(startDate),
+            timeEnd: Timestamp.fromDate(endDate) // will need to change!
+        }
+        addDoc(eventsCollectionRef, newEvent)
+        .catch(err => console.log(err))
         setShowEditor(false)
     }
     const selectedUserId = useRef<any>(selected.id)

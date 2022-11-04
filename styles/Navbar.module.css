@@ -88,6 +88,7 @@
 .profile_wrapper {
     height: 2em;
     width: 2em;
+    position: relative;
     overflow: hidden;
     border-radius: 50%;
     border: 2px solid var(--active-white);

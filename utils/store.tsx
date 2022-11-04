@@ -1,6 +1,6 @@
 import create from 'zustand'
 
-export type UserDetails = {
+export type AuthDetails = {
     name: string,
     email: string,
     photoURL: string,
@@ -16,5 +16,5 @@ export const useStore = create<any>((set : any) => ({
         id: "",
         loggedIn: false
     },
-    setAuthDetails: (details : UserDetails) => set(() => ({authDetails: details})) 
+    setAuthDetails: (details : AuthDetails) => set(() => ({authDetails: details})) 
 }))

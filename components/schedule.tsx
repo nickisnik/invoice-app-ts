@@ -1,16 +1,22 @@
 export type User = {
     name: string,
     color: string,
-    userId: string,
+    id: string,
     position: string,
-    events: Event[]
+    photoURL: string
 }
 export type Event = {
-    eventId: string,
+    user_id: string,
     name: string,
     type: string,
-    timeStart: string,
-    timeEnd: string
+    timeStart: {
+        nanoseconds: number,
+        seconds: number
+    },
+    timeEnd: {
+        nanoseconds: number,
+        seconds: number
+    }
 }
 const users = [
     {   name : "Nick N.",
