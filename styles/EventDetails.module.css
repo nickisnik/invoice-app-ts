@@ -1,0 +1,70 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 300;
+    color: black;
+    display: flex;
+}
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.377);
+    z-index: 0;
+}
+.window_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: auto;
+    min-width: none;
+    max-width: min(500px, 90%);
+    padding: 1em 2em;
+    background-color: white;
+    border-radius: 15px;
+    z-index: 1;
+    font-size: 1em;
+}
+
+.details_header {
+    width: 100%;
+    display: flex;
+    border-bottom: 2px solid grey;
+    gap: 4em;
+}
+.details_title, .title_date {
+    margin: auto;
+    font-family: inherit;
+    font-size: 2em;
+    font-weight: 700;
+}
+.title_date {
+    color: grey;
+}
+.details_body {
+    display: flex;
+    flex-direction: column;
+}
+.event_name {
+    font-size: 1em;
+    margin-bottom: 2em;
+}
+.controls {
+    display: flex;
+    gap: 0.5em;
+    justify-content: flex-end;
+}
+.delete, .edit {
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    background: none;
+    font-weight: 600;
+    color: grey;
+    font-family: inherit;
+}
+.delete:hover {
+    color: red;
+}

@@ -9,7 +9,7 @@ const Note = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSub
         <select className={styles.userSelect} ref={selectedUserId} defaultValue={selected.id} name="users" id="users">
                     {users?.map((user : User, userIndex : number) => {
                         return (
-                            <option key={userIndex} value={user.userId}>{user.name}</option>
+                            <option key={userIndex} value={user.id}>{user.name}</option>
                         )
                     })}
                 </select>

@@ -5,7 +5,8 @@ export type AuthDetails = {
     email: string,
     photoURL: string,
     id: string,
-    loggedIn: boolean
+    loggedIn: boolean,
+    anonymous: boolean
 }
 
 export const useStore = create<any>((set : any) => ({
@@ -16,5 +17,12 @@ export const useStore = create<any>((set : any) => ({
         id: "",
         loggedIn: false
     },
-    setAuthDetails: (details : AuthDetails) => set(() => ({authDetails: details})) 
+    setAuthDetails: (details : AuthDetails) => set(() => ({authDetails: details})),
+    selectedBusiness : {
+        id: "",
+        name: ""
+    },
+    setSelectedBusiness : (name : string) => set(() => ({selectedBusiness: name})),
+    loading: true,
+    setLoading: (status : boolean) => set(() => ({loading: status}))
 }))

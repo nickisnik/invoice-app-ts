@@ -8,10 +8,13 @@ import type {User, Event} from '../../components/schedule'
 import Head from 'next/head'
 import UserEvents from '../../components/UserEvents'
 import { db } from '../../utils/firebase-config'
-import { collection, onSnapshot, getDocs, where, query } from 'firebase/firestore'
+import { collection, onSnapshot, getDocs, where, query, addDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import { useStore } from '../../utils/store'
 import type { AuthDetails } from '../../utils/store'
+import EventDetails from '../../components/EventDetails'
+import BusinessList from '../../components/BusinessList'
+import Userbox from '../../components/UserBox/Userbox'
 
 const Schedule = () => {
 	const [days, setDays] = useState<any>(() => {
@@ -38,29 +41,34 @@ const Schedule = () => {
 			})
 
 	}
+	const [selectedBusiness, setSelectedBusiness] = useStore(
+		(state : any) => [state.selectedBusiness, state.setSelectedBusiness]
+	)
 	const [events, setEvents] = useState<Event[] | null>()
 	useEffect(() => {
 		if(!days) return
-		const eventsCollectionRef = collection(db, "businesses", "Nick's restaurant", "events")
+		if(!selectedBusiness) return
+		const eventsCollectionRef = collection(db, "businesses", selectedBusiness.id, "events")
 		const q = query(eventsCollectionRef, where('timeStart', '>', days[0]), where('timeStart', '<', days[6]))
 		const unsubscribe = onSnapshot(q, (data: any) => {
 			const event_data = data.docs.map((doc : any) => ({...doc.data(), id: doc.id}))
 			setEvents(event_data)
-			console.log(event_data)
 		})
 		return () => unsubscribe()
 	}, [days])
-
+	const [showDetails, setShowDetails] = useState(false)
 	const [showEditor, setShowEditor] = useState(false)
 	const [users, setUsers] = useState<User[]>();
 	const selected = useRef<any>()
 	useEffect(() => {
+			if(!selectedBusiness.id) return
 			// Next step is add possible filters for user queries
 			const usersCollectionRef = collection(db, "users")
-			const unsubscribe = onSnapshot(usersCollectionRef, (data : any) => {
+			const q = query(usersCollectionRef, where("businesses", "array-contains", selectedBusiness.id))
+			const unsubscribe = onSnapshot(q, (data : any) => {
 				const user_data = data.docs.map((doc : any) => ({...doc.data(), id: doc.id}))	
 				setUsers(user_data)
-				console.log(user_data)
+				//console.log(user_data)
 			})
 			return () => unsubscribe()
 	}, [])
@@ -73,15 +81,12 @@ const Schedule = () => {
 			setShowEditor((prev) => !prev)
 	} 
 	const addUser = () => {
-			// const newUser = {
-			// 		name: 'Brad',
-			// 		color: 'rgb(00,22,55)',
-			// 		position: 'Worker'
-			// }
-			// setUsers((old) => {
-			// 		if(!old) return
-			// 		return [...old, newUser]
-			// })
+		// Add a demo user
+		addDoc(collection(db, "users"), {
+			businesses : [selectedBusiness.id],
+			color: "rgb(100, 150, 200)",
+			name: `Employee`	
+		})
 	}
 	const authDetails : AuthDetails = useStore((state : any) => state.authDetails)
 return (
@@ -91,7 +96,7 @@ return (
 					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<div className={styles.wrapper}>
-					<section className={styles.datecontrol_section}>
+					<section className={styles.control_section}>
 							<div className={styles.daterange_wrapper}>
 									<button onClick={() => changeDays(-7)} className={styles.arrow_left}>
 											<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="451.847px" height="451.847px" viewBox="0 0 451.847 451.847" fill="currentColor"> <g> <path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744 c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
@@ -130,23 +135,16 @@ return (
 												}
 													return (
 													<div className={styles.events_row} key={userIndex}>
-															<div style={{backgroundColor: user.color}} className={styles.username_box}>
-																	<div className={styles.avatar_wrapper}><Image layout='fill' src={user.photoURL} alt="Profile" /></div>
-																	<div className={styles.name_wrapper}>
-																			<span className={styles.user_name}>{user.name}</span>
-																			<span className={styles.user_position}>20h, {user.position}</span>
-																			<span className={styles.user_position}>0h/20h</span>
-																	</div>
-																	<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="451.847px" height="451.847px" viewBox="0 0 451.847 451.847" fill="currentColor"> <g> <path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744 c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
-															</div>
+															<Userbox user={user} />
 															{days?.map((currentDay : any, currentDayIndex : number) => (
-																	<UserEvents user_events={user_events} key={currentDayIndex} currentDay={currentDay} currentDayIndex={currentDayIndex} user={user} toggleEditor={toggleEditor} />
+																	<UserEvents setShowDetails={setShowDetails} selected={selected} user_events={user_events} key={currentDayIndex} currentDay={currentDay} currentDayIndex={currentDayIndex} user={user} toggleEditor={toggleEditor} />
 															))}
 													</div>)
 	})}
 							</main>
 					</section>
 			</div>
+			{showDetails && <EventDetails selected={selected} setShowDetails={setShowDetails} />}
 			{showEditor && <AddEvent selected={selected.current} setShowEditor={setShowEditor} users={users} days={days} setUsers={setUsers} />}
 	</div>
 )

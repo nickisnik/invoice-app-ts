@@ -3,9 +3,11 @@ export type User = {
     color: string,
     id: string,
     position: string,
-    photoURL: string
+    photoURL: string,
+    anonymous: boolean
 }
 export type Event = {
+    id: string,
     user_id: string,
     name: string,
     type: string,

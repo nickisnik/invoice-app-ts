@@ -4,17 +4,27 @@ import { useStore } from '../utils/store';
 import { auth, signInWithGoogle } from '../utils/firebase-config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import Image from 'next/image';
+import type { AuthDetails } from '../utils/store';
 
 const NavUserProfile = () => {
-	const [authState, setAuthState] = useStore(
+	const [authState, setAuthState] : [AuthDetails, any] = useStore(
 			(state : any) => [state.authDetails, state.setAuthDetails]
 	)
-  useEffect(() => {
-    console.log(authState)
-  }, [])
+  const setSelectedBusiness = useStore(
+    (state : any) => state.setSelectedBusiness
+  )
+  const setLoading = useStore(
+    (state : any) => state.setLoading
+  )
+
 	const signIn = () => {
     signInWithGoogle()
     .catch((err) => console.log(err))
+  }
+  const handleChangeBusiness = () => {
+    setLoading(true)
+    setSelectedBusiness("")
+    setTimeout(() => setLoading(false), 500)
   }
 
 	if(!authState.loggedIn) return (
@@ -22,8 +32,11 @@ const NavUserProfile = () => {
 	)
   return (
     <div className={styles.account}>
-        <div className={styles.profile_wrapper}><Image layout='fill' src={authState.photoURL} alt={authState.name} /></div>
+        {!authState.anonymous ? 
+          <div className={styles.profile_wrapper}><Image layout='fill' src={authState.photoURL} alt={authState.name} /></div>
+        : <div>Guest</div>}
         <button className={styles.logout} onClick={() => signOut(auth)}>Logout</button>
+        <button className={styles.business_name} onClick={handleChangeBusiness}>Change business</button>
     </div>
   )
 }

@@ -6,12 +6,16 @@ import type {User, Event} from '../schedule'
 import Shift from './Shift';
 import Note from './Note';
 import Off from './Off';
+import { useStore } from '../../utils/store'
 import { db } from '../../utils/firebase-config';
 import { collection, addDoc, Timestamp } from 'firebase/firestore'
 const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} : any) => {
+    const [selectedBusiness, setSelectedBusiness] = useStore(
+		(state : any) => [state.selectedBusiness, state.setSelectedBusiness]
+	)
     const handleSubmit = (e : any) => {
         e.preventDefault()
-        const eventsCollectionRef = collection(db, "businesses", "Nick's restaurant", "events")
+        const eventsCollectionRef = collection(db, "businesses", selectedBusiness.id, "events")
         const title = selectedTitle.current.value
         const newEvent =  {   
             user_id: selected.id,
@@ -25,7 +29,7 @@ const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} 
         setShowEditor(false)
     }
     const selectedUserId = useRef<any>(selected.id)
-    const selectedTitle = useRef<any>()
+    const selectedTitle = useRef<any>('Add title')
     const [eventType, setEventType] = useState<any>(
         'Shift' // OR 'Task' OR 'Note'
         )

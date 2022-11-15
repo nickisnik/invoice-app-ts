@@ -13,7 +13,9 @@ import NavUserProfile from './NavUserProfile';
 const Navbar = () => {
   const router = useRouter();
   const currentRoute = router.pathname;
-
+  const [selectedBusiness, setSelectedBusiness] = useStore(
+    (state : any) => [state.selectedBusiness, state.setSelectedBusiness]
+  )
 
   return (
     <nav className={styles.container}>
@@ -29,7 +31,6 @@ const Navbar = () => {
           <a className={currentRoute === '/schedule' ? `${styles.active} ${styles.menu_item}` : styles.menu_item}><EventNoteIcon /> <span>Schedule</span></a>
         </Link>
       </div>
-
       <NavUserProfile/>
     </nav>
   )

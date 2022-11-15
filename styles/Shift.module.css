@@ -1,13 +1,13 @@
 .addForm {
     display: flex;
-    margin: auto;
+    padding: 1em;
     flex-direction: column;
     gap: 1em;
     color: white;
 }
 .submit, .close {
     cursor: pointer;
-    background-color: rgb(0, 128, 255);
+    background-color: blue;
     padding: 0.5em;
     color: white;
     border-radius: 10px;
@@ -25,9 +25,11 @@
     border: none;
     font-size: 1.4em;
     outline: none;
+    background: none;
     margin-top: 1em;
+    color: white;
     margin-bottom: calc(1em + 1px);
-    border-bottom: 1px solid rgba(97, 97, 97, 0.341);
+    border-bottom: 2px solid rgba(97, 97, 97, 0.341);
 }
 .title:focus {
     border-bottom: 2px solid rgb(41, 124, 226);

@@ -16,7 +16,7 @@ const Shift = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSu
                 <select className={styles.userSelect} ref={selectedUserId} defaultValue={selected.id} name="users" id="users">
                     {users?.map((user : User, userIndex : number) => {
                         return (
-                            <option key={userIndex} value={user.userId}>{user.name}</option>
+                            <option key={userIndex} value={user.id}>{user.name}</option>
                         )
                     })}
                 </select>
@@ -27,7 +27,9 @@ const Shift = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSu
                         inputFormat="dd/MM/yyyy hh:mm a"
                         value={startDate}
                         onChange={(value) => handleDateChange(value, true)}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField {...params}
+                            className="myDatePicker"
+                             />}
                     />
                     <DateTimePicker
                         className={styles.datePicker}
@@ -35,7 +37,8 @@ const Shift = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSu
                         inputFormat="dd/MM/yyyy hh:mm a"
                         value={endDate}
                         onChange={(value) => handleDateChange(value, false)}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField
+                            {...params} className="myDatePicker"  />}
                     />
                 </LocalizationProvider>
                 <button className={styles.submit} type="submit">Save</button>

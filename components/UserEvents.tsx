@@ -5,7 +5,7 @@ import type { Event, User } from './schedule';
 import { db } from '../utils/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
 
-const UserEvents = ({currentDay, currentDayIndex, user, toggleEditor, user_events} : any) => {
+const UserEvents = ({setShowDetails, selected, currentDay, currentDayIndex, user, toggleEditor, user_events} : any) => {
     const currentDate = format(currentDay, 'dd/MM/yyyy');
     const eventsToday = user_events?.filter((event : Event) => (
         format(new Date(event.timeStart.seconds * 1000), 'dd/MM/yyyy') === currentDate
@@ -24,7 +24,7 @@ const UserEvents = ({currentDay, currentDayIndex, user, toggleEditor, user_event
         <div key={currentDayIndex} className={styles.task_wrapper}>
             {eventsToday?.sort((a:Event,b:Event) => shiftFirst(a,b))
             .map((userEvent : Event, eventIndex : number) => (
-                <UserEvent key={eventIndex} user={user} eventsToday={eventsToday} userEvent={userEvent} eventIndex={eventIndex} />
+                <UserEvent setShowDetails={setShowDetails} selected={selected} key={eventIndex} user={user} eventsToday={eventsToday} userEvent={userEvent} eventIndex={eventIndex} />
             ))}
             {eventsToday[0]?.type !== 'Off' && <div onClick={() => toggleEditor(user.id, user.name, currentDay)} className={styles.empty_event}>
                 <span>+</span>
@@ -37,12 +37,22 @@ type EventProps = {
     eventsToday : Event[],
     userEvent: Event,
     eventIndex: number,
-    user: User
+    user: User,
+    selected: any,
+    setShowDetails: any
 } 
 
-export const UserEvent = ({user, eventsToday, eventIndex, userEvent} : EventProps) => {
+export const UserEvent = ({setShowDetails, selected, user, eventsToday, eventIndex, userEvent} : EventProps) => {
     const start = format(new Date(userEvent.timeStart.seconds * 1000), 'H:mm')
     const end = format(new Date(userEvent.timeEnd.seconds * 1000), 'H:mm')
+
+    const showDetails = () => {
+        selected.current = {
+            eventDetails: userEvent
+        }
+        setShowDetails(true)
+    }
+
     if(eventIndex === 2 && eventsToday.length > 3) {
        return <></>
     }
@@ -55,7 +65,7 @@ export const UserEvent = ({user, eventsToday, eventIndex, userEvent} : EventProp
         
         //const eventStart = formatDate.parse(userEvent.timeStart)
         return (
-            <div key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
+            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
                 <span className={styles.time}>{start} - {end}</span>
                 <span className={styles.event_name}>{userEvent.name}</span>
             </div>
@@ -63,14 +73,14 @@ export const UserEvent = ({user, eventsToday, eventIndex, userEvent} : EventProp
     }
     if(userEvent.type === 'Note') {
         return (
-            <div key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
+            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
                 <span className={`${styles.event_name} ${styles.note}`}>{userEvent.name}</span>
             </div>
         )
     }
     if(userEvent.type === 'Off') {
         return (
-            <div key={eventIndex} style={{backgroundColor: user.color}} className={`${styles.task} ${styles.time_off}`}>
+            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={`${styles.task} ${styles.time_off}`}>
                 <span className={styles.off_title}>Time off</span>
                 <span className={styles.off_reason}>{userEvent.name}</span>
             </div>
