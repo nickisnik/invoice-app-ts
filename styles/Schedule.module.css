@@ -145,6 +145,7 @@
     text-align: center;
     background-color: white;
     cursor: pointer;
+    flex-grow: 1;
 }
 
 

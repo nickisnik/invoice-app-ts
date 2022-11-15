@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useStore(
     (state : any) => [state.loading, state.setLoading]
   )
-  const createNewUser = async (user : any) => {
+  const createNewUser = async (user : any, anon : boolean) => {
     let newBusinessID = ""
     addDoc(collection(db, "businesses"), {
       name: "Demo"
@@ -30,14 +30,25 @@ function MyApp({ Component, pageProps }: AppProps) {
       newBusinessID = business.id 
     }).then(() => {
       // Link the new user account to the business
-      setDoc(doc(db, "users", user.uid), {
+      if(anon) {
+        setDoc(doc(db, "users", user.uid), {
+          businesses : [newBusinessID],
+          name: 'Manager',
+          anonymous: anon
+        })
+      } else {
+        setDoc(doc(db, "users", user.uid), {
+          businesses : [newBusinessID],
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL || "",
+          anonymous: anon
+        })
+      }
+      // Add a second demo user
+      addDoc(collection(db, "users"), {
         businesses : [newBusinessID],
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        id: user.uid,
-        loggedIn: true,
-        anonymous: user.isAnonymous
+        name: `Employee`	
       })
       // add logic to create a first demo event in events collection
     }).then(() => {
@@ -51,9 +62,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleAnonUser = async (user : any) => {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     if(!userDoc.exists()) {
-      console.log("User doesn't exist")
       // Create demo business 
-      createNewUser(user)
+      createNewUser(user, true).then(() => {
+        // Add second user for demo
+      addDoc(collection(db, "users"), {
+        businesses : [selectedBusiness.id],
+        name: `Employee`	
+      })
+      })
+      
+      //
     } else {
       setSelectedBusiness({id: userDoc.data().businesses[0], name: "Demo"})
       setLoading(false)
@@ -69,7 +87,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       })
     } else {
       // Create new user
-      createNewUser(user)
+      createNewUser(user, true).then(() => {
+        // Add second user for demo
+      addDoc(collection(db, "users"), {
+        businesses : [selectedBusiness.id],
+        name: `Employee`	
+      })
+      })
+      
     }
 
     // Update user name and photo from google

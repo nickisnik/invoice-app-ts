@@ -49,10 +49,11 @@ const Schedule = () => {
 		if(!days) return
 		if(!selectedBusiness) return
 		const eventsCollectionRef = collection(db, "businesses", selectedBusiness.id, "events")
-		const q = query(eventsCollectionRef, where('timeStart', '>', days[0]), where('timeStart', '<', days[6]))
+		const q = query(eventsCollectionRef, where('timeStart', '>=', days[0]), where('timeStart', '<=', days[6]))
 		const unsubscribe = onSnapshot(q, (data: any) => {
 			const event_data = data.docs.map((doc : any) => ({...doc.data(), id: doc.id}))
 			setEvents(event_data)
+			console.log(event_data)
 		})
 		return () => unsubscribe()
 	}, [days])
