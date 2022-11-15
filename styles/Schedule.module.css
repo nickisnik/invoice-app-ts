@@ -98,33 +98,29 @@
     height: 100%;
     display: flex;
     font-size: 1em;
+    gap: 0.5em;
     align-items: center;
     color: grey;
 }
-.header_employees svg {
-    height: 1em;
-    width: 1em;
+
+.employees_title {
+    font-size: 1em;
+    font-weight: 600;
 }
-.header_employees svg:hover {
-    cursor: pointer;
-    color: black;
-}
-.employees_btn {
+.add_employee {
     color: inherit;
     display: flex;
+    gap: 0.5em;
     font-size: 1em;
     align-items: center;
     border: none;
     background: none;
-    gap: 1em;
     font-family: inherit;
 }
-
-.employees_btn span {
-    font-size: 1.1em;
-    font-weight: 600;
+.add_employee:hover {
+    color: black;
+    cursor: pointer;
 }
-
 .arrow_down {
     height: 1.1em !important;
     width: 1.1em !important;
@@ -193,7 +189,7 @@
 .task {
     text-align: center;
     margin: 0 auto auto auto;
-    background-color: #dae6f0;
+    background-color: #e3e3e3;
     color: rgba(21, 176, 237, 1);
     font-weight: 600;
     border-radius: 5px;

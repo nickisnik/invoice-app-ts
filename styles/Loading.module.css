@@ -21,7 +21,7 @@
 
 .loading_logo::after {
     position: absolute;
-    content: 'ALPHA';
+    content: 'DEMO';
     top: 15%;
     transform: rotate(0deg);
     right: -5%;

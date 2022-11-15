@@ -23,7 +23,7 @@ const NavUserProfile = () => {
   }
   const handleChangeBusiness = () => {
     setLoading(true)
-    setSelectedBusiness("")
+    setSelectedBusiness({name: "", id: ""})
     setTimeout(() => setLoading(false), 500)
   }
 
@@ -36,7 +36,7 @@ const NavUserProfile = () => {
           <div className={styles.profile_wrapper}><Image layout='fill' src={authState.photoURL} alt={authState.name} /></div>
         : <div>Guest</div>}
         <button className={styles.logout} onClick={() => signOut(auth)}>Logout</button>
-        <button className={styles.business_name} onClick={handleChangeBusiness}>Change business</button>
+        {!authState.anonymous && <button className={styles.change_business} onClick={handleChangeBusiness}>Change business</button>}
     </div>
   )
 }

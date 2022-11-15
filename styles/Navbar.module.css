@@ -32,7 +32,6 @@
     background-color: rgb(153, 76, 226);
 }
 .menu_wrapper {
-    margin-top: 3em;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -118,8 +117,13 @@
     border-radius: 5px;
     margin: auto auto 0 auto;
 }
-
 .business_name {
+    color: rgb(118, 118, 118);
+    margin: 0em auto 2em auto;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.change_business {
     margin-top: auto;
     border: none;
     background: none;
