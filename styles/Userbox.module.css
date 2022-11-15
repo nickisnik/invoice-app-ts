@@ -3,7 +3,7 @@
     font-weight: 600;
     text-align: center;
     display: flex;
-    background-color: rgb(236, 239, 242);
+    background-color: #e3e3e3;
     height: 10em;
     justify-content: flex-start;
     align-items: flex-start;
@@ -29,22 +29,21 @@
     display: flex;
 }
 .default_avatar {
-    background-color: grey;
+    background-color: var(--purple);
     width: 100%;
     height: 100%;
     display: flex;
 }
 .default_avatar_name {
     margin: auto;
-    color: whitesmoke;
-    font-weight: 700;
+    color: white;
 }
 .name_wrapper {
     width: 50%;
     display: flex;
     margin-right: auto;
     flex-direction: column;
-    color: whitesmoke;
+    color: black;
 }
 .user_name {
     text-align: left;
@@ -56,6 +55,6 @@
 .user_position {
     font-size: 0.65em;
     font-weight: 600;
-    color: rgb(228, 228, 228);
+    color: black;
     text-align: left;
 }

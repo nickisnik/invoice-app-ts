@@ -10,6 +10,7 @@ import { updateDoc, doc, addDoc, getDoc, collection, setDoc } from 'firebase/fir
 import Login from '../components/Login';
 import BusinessList from '../components/BusinessList';
 import type { AuthDetails } from '../utils/store';
+import { async } from '@firebase/util';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [authState, setAuthState] : [AuthDetails, any] = useStore(
@@ -21,37 +22,59 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useStore(
     (state : any) => [state.loading, state.setLoading]
   )
+  const createNewUser = async (user : any) => {
+    let newBusinessID = ""
+    addDoc(collection(db, "businesses"), {
+      name: "Demo"
+    }).then((business) => {
+      newBusinessID = business.id 
+    }).then(() => {
+      // Link the new user account to the business
+      setDoc(doc(db, "users", user.uid), {
+        businesses : [newBusinessID],
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        id: user.uid,
+        loggedIn: true,
+        anonymous: user.isAnonymous
+      })
+      // add logic to create a first demo event in events collection
+    }).then(() => {
+      setSelectedBusiness({id: newBusinessID, name: "Demo"})
+      //console.log(newBusinessID)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000)
+    }).catch((err) => console.log(err))
+  }
   const handleAnonUser = async (user : any) => {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     if(!userDoc.exists()) {
       console.log("User doesn't exist")
       // Create demo business 
-      let newBusinessID = ""
-      addDoc(collection(db, "businesses"), {
-        name: "Demo"
-      }).then((business) => {
-        newBusinessID = business.id 
-      }).then(() => {
-        // Link the new user account to the business
-        setDoc(doc(db, "users", user.uid), {
-          businesses : [newBusinessID],
-          color: "rgb(100, 150, 200)",
-          name: "Guest"
-        })
-        // add logic to create a first demo event in events collection
-      }).then(() => {
-        setSelectedBusiness({id: newBusinessID, name: "Demo"})
-        //console.log(newBusinessID)
-        setTimeout(() => {
-          setLoading(false)
-        }, 1000)
-      }).catch((err) => console.log(err))
-      
+      createNewUser(user)
     } else {
-      console.log(userDoc.data().businesses[0] )
       setSelectedBusiness({id: userDoc.data().businesses[0], name: "Demo"})
       setLoading(false)
     }
+  }
+  const handleGoogleUser = async (user : any) => {
+    const userRef = doc(db, "users", user.uid)
+    const userDoc = await getDoc(userRef)
+    if(userDoc.exists()) {
+      updateDoc(userRef, {
+        name: user.displayName,
+        photoURL: user.photoURL
+      })
+    } else {
+      // Create new user
+      createNewUser(user)
+    }
+
+    // Update user name and photo from google
+    // in case they changed since last time
+
   }
   useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -67,14 +90,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           anonymous: user.isAnonymous
 				})
         if(!user.isAnonymous) {
-
-          const userDoc = doc(db, "users", user.uid)
-          // Update user name and photo from google
-          // in case they changed since last time
-          updateDoc(userDoc, {
-            name: user.displayName,
-            photoURL: user.photoURL
-          })
+          handleGoogleUser(user)
         }
         if(user.isAnonymous) {
           // Creates new user

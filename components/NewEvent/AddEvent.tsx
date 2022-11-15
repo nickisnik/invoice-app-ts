@@ -65,7 +65,7 @@ const AddEvent = ({users, setSelected, setUsers, days, setShowEditor, selected} 
         <div className={styles.wrapper}>
         <section className={styles.selector_wrapper}>
             <div className={`${styles.selector_item} ${eventType==='Shift' && styles.active}`} onClick={() => setEventType('Shift')}>Shift</div>
-            <div className={`${styles.selector_item} ${eventType==='Task' && styles.active}`} onClick={() => setEventType('Task')}>Task</div>
+{/*             <div className={`${styles.selector_item} ${eventType==='Task' && styles.active}`} onClick={() => setEventType('Task')}>Task</div> */}
             <div className={`${styles.selector_item} ${eventType==='Note' && styles.active}`} onClick={() => setEventType('Note')}>Note</div>
             <div className={`${styles.selector_item} ${eventType==='Off' && styles.active}`} onClick={() => setEventType('Off')}>Off</div>
         </section>

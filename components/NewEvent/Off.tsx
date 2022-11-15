@@ -9,7 +9,7 @@ const Off = ({selected, selectedUserId, setShowEditor, selectedTitle, handleSubm
     }, [])
     return (
     <form onSubmit={handleSubmit} className={styles.addForm}>
-        <span className={styles.off_date}>{format(startDate, 'EEEE - dd/MM/yy')}</span>
+       {/*  <span className={styles.off_date}>{format(startDate, 'EEEE - dd/MM/yy')}</span> */}
         <textarea ref={selectedTitle} placeholder='Reason for time off...' required className={styles.note} />
         <select className={styles.userSelect} ref={selectedUserId} defaultValue={selected.id} name="users" id="users">
                     {users?.map((user : User, userIndex : number) => {

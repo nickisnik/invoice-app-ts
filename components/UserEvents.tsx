@@ -65,7 +65,7 @@ export const UserEvent = ({setShowDetails, selected, user, eventsToday, eventInd
         
         //const eventStart = formatDate.parse(userEvent.timeStart)
         return (
-            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
+            <div onClick={showDetails} key={eventIndex}  className={styles.task}>
                 <span className={styles.time}>{start} - {end}</span>
                 <span className={styles.event_name}>{userEvent.name}</span>
             </div>
@@ -73,14 +73,14 @@ export const UserEvent = ({setShowDetails, selected, user, eventsToday, eventInd
     }
     if(userEvent.type === 'Note') {
         return (
-            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={styles.task}>
+            <div onClick={showDetails} key={eventIndex}  className={styles.task}>
                 <span className={`${styles.event_name} ${styles.note}`}>{userEvent.name}</span>
             </div>
         )
     }
     if(userEvent.type === 'Off') {
         return (
-            <div onClick={showDetails} key={eventIndex} style={{backgroundColor: user.color}} className={`${styles.task} ${styles.time_off}`}>
+            <div onClick={showDetails} key={eventIndex}  className={`${styles.task} ${styles.time_off}`}>
                 <span className={styles.off_title}>Time off</span>
                 <span className={styles.off_reason}>{userEvent.name}</span>
             </div>

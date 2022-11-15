@@ -20,6 +20,7 @@ const Navbar = () => {
   return (
     <nav className={styles.container}>
       <span className={styles.logo}>Shiftly</span>
+      <span className={styles.business_name}>{selectedBusiness.name}</span>
       <div className={styles.menu_wrapper}>
         <Link href="/dashboard">
           <a className={currentRoute === '/dashboard' ? `${styles.active} ${styles.menu_item}` : styles.menu_item}><DashboardIcon/><span>Dashboard</span></a>
